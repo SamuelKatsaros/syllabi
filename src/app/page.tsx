@@ -6,6 +6,7 @@ import Navbar from '../../components/Navbar';
 import SyllabusCard from '../../components/SyllabusCard';
 import SearchAndFilters from '../../components/SearchAndFilters';
 import NotificationBar from '../../components/NotificationBar';
+import themes from '../../themes.json';
 
 interface Course {
   name: string;
@@ -43,9 +44,11 @@ function HomeContent() {
   const [semester, setSemester] = useState('');
   const [sort, setSort] = useState('latest');
 
-  // Pagination state: only use currentPage since the setter is not needed.
-  const [currentPage] = useState(1);
+  // Pagination state
+  const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
+
+  const theme = themes[universityId as keyof typeof themes] || themes.default;
 
   useEffect(() => {
     if (!universityId) return;
@@ -59,31 +62,57 @@ function HomeContent() {
 
     fetch(url)
       .then((res) => res.json())
-      .then((data) => setSyllabi(data || []))
+      .then((data) => {
+        setSyllabi(data || []);
+        setCurrentPage(1); // reset pagination when new data is fetched
+      })
       .catch((err) => console.error('Failed to fetch syllabi', err));
   }, [universityId, department, courseCode, professor, semester, sort, q]);
 
   const safeSyllabi = syllabi || [];
-  const displayedSyllabi = safeSyllabi.slice(
+
+  // When filtering/search is active, ensure each syllabus has course info.
+  const filtersActive = department || courseCode || professor || semester || q;
+  const filteredSyllabi = filtersActive
+    ? safeSyllabi.filter((s) => s.courses != null)
+    : safeSyllabi;
+
+  const totalPages = Math.ceil(filteredSyllabi.length / itemsPerPage);
+
+  const displayedSyllabi = filteredSyllabi.slice(
     (currentPage - 1) * itemsPerPage,
     currentPage * itemsPerPage
   );
+
+  // Compute unique filter values based on the course properties
   const uniqueDepartments = [
     ...new Set(
-      safeSyllabi
+      filteredSyllabi
         .map((s) => s.courses?.department)
         .filter((d): d is string => Boolean(d))
     ),
   ];
   const uniqueCourseCodes = [
-    ...new Set(safeSyllabi.map((s) => s.courses?.course_code).filter(Boolean)),
-  ] as string[];
+    ...new Set(
+      filteredSyllabi
+        .map((s) => s.courses?.course_code)
+        .filter((c): c is string => Boolean(c))
+    ),
+  ];
   const uniqueProfessors = [
-    ...new Set(safeSyllabi.map((s) => s.courses?.professor).filter(Boolean)),
-  ] as string[];
+    ...new Set(
+      filteredSyllabi
+        .map((s) => s.courses?.professor)
+        .filter((p): p is string => Boolean(p))
+    ),
+  ];
   const uniqueSemesters = [
-    ...new Set(safeSyllabi.map((s) => s.courses?.semester).filter(Boolean)),
-  ] as string[];
+    ...new Set(
+      filteredSyllabi
+        .map((s) => s.courses?.semester)
+        .filter((s): s is string => Boolean(s))
+    ),
+  ];
 
   return (
     <div className="min-h-screen bg-base-200">
@@ -116,6 +145,29 @@ function HomeContent() {
               </li>
             ))}
           </ul>
+        )}
+
+        {totalPages > 1 && (
+          <div className="flex justify-center mt-4">
+            <div className="join">
+              {Array.from({ length: totalPages }, (_, i) => (
+                <button
+                  key={i + 1}
+                  className={`join-item btn ${
+                    currentPage === i + 1 ? "btn-active" : ""
+                  }`}
+                  onClick={() => setCurrentPage(i + 1)}
+                  style={{
+                    backgroundColor: currentPage === i + 1 ? theme.primaryColor : 'white',
+                    color: currentPage === i + 1 ? 'white' : theme.primaryColor,
+                    borderColor: theme.primaryColor
+                  }}
+                >
+                  {i + 1}
+                </button>
+              ))}
+            </div>
+          </div>
         )}
       </main>
     </div>
