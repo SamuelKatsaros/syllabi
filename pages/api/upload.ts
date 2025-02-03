@@ -17,7 +17,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   try {
     console.log("Incoming file upload request...");
 
-    const form = formidable({ keepExtensions: true });
+    const form = new formidable.IncomingForm();
 
     form.parse(req, async (err, fields, files) => {
       if (err) {
@@ -37,21 +37,23 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       }
 
       const fileObj = files.file;
+      // Fix: if fileObj is an array, get the first file
+      const uploadedFile = Array.isArray(fileObj) ? fileObj[0] : fileObj;
 
-      if (!fileObj || !course_id) {
-        console.error("Missing required fields:", { file: fileObj, course_id, university_id });
+      if (!uploadedFile || !course_id) {
+        console.error("Missing required fields:", { file: uploadedFile, course_id, university_id });
         return res.status(400).json({ error: 'Missing file or course_id' });
       }
 
       console.log("Uploading file to Supabase...");
 
-      const fileData = fs.readFileSync(fileObj.filepath);
-      const fileExt = fileObj.originalFilename?.split('.').pop();
+      const fileData = fs.readFileSync(uploadedFile.filepath);
+      const fileExt = uploadedFile.originalFilename?.split('.').pop();
       const fileName = `${Date.now()}.${fileExt}`;
       const filePath = `syllabi/${fileName}`;
 
       const { data, error } = await supabase.storage.from('syllabi').upload(filePath, fileData, {
-        contentType: fileObj.mimetype || 'application/pdf',
+        contentType: uploadedFile.mimetype || 'application/pdf',
       });
 
       if (error) {
