@@ -2,7 +2,7 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 import { supabase } from '@/lib/supabase';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  const { university_id, department, course_code, sort } = req.query;
+  const { university_id, department, course_code, sort, q } = req.query;
 
   if (typeof university_id !== 'string') {
     return res.status(400).json({ error: 'Invalid university id' });
@@ -11,7 +11,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   // Build the query for the specified university only.
   let query = supabase
     .from('syllabi')
-    .select('id, file_url, created_at, university_id, courses(id, name, department, course_code)')
+    .select('id, file_url, created_at, university_id, courses(id, name, department, course_code, professor, semester)')
     .eq('university_id', university_id);
 
   // Apply filters if provided.
@@ -20,6 +20,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   }
   if (course_code && typeof course_code === 'string') {
     query = query.eq('courses.course_code', course_code);
+  }
+  if (q && typeof q === 'string') {
+    query = query.ilike('courses.name', `%${q}%`);
   }
 
   const { data, error } = await query;

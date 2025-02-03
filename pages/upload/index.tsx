@@ -1,3 +1,5 @@
+"use client";
+
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import Navbar from '../../components/Navbar';
@@ -12,7 +14,6 @@ export default function UploadSyllabus() {
 
   const router = useRouter();
 
-  // Auto-fill the universityId from the URL query parameter if available
   useEffect(() => {
     if (router.query.university) {
       setUniversityId(router.query.university as string);
@@ -27,52 +28,29 @@ export default function UploadSyllabus() {
 
   const handleUpload = async () => {
     if (!file || !courseName || !department || !courseCode || !universityId) {
-      alert("Please enter all details.");
+      alert("Please fill all fields and upload a file.");
       return;
     }
 
     setUploading(true);
     try {
-      let courseResponse = await fetch(
-        `/api/course?name=${encodeURIComponent(courseName)}&department=${encodeURIComponent(department)}&course_code=${encodeURIComponent(courseCode)}&university_id=${universityId}`
-      );
-      let courseData = await courseResponse.json();
-      let course_id = courseData?.id;
-
-      if (!course_id) {
-        const createCourseRes = await fetch("/api/course", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ name: courseName, department, course_code: courseCode, university_id: universityId }),
-        });
-        const newCourse = await createCourseRes.json();
-        if (!createCourseRes.ok) {
-          alert("Failed to create course: " + newCourse.error);
-          setUploading(false);
-          return;
-        }
-        course_id = newCourse.id;
-      }
-
       const formData = new FormData();
       formData.append("file", file);
-      formData.append("course_id", course_id);
+      formData.append("course_name", courseName);
+      formData.append("department", department); 
+      formData.append("course_code", courseCode);
       formData.append("university_id", universityId);
-      // For now, user_id is fixed; replace with your auth mechanism when available
-      formData.append("user_id", "TEMP_USER_ID");
 
-      const uploadResponse = await fetch("/api/upload", {
+      const response = await fetch("/api/upload", {
         method: "POST",
         body: formData,
       });
 
-      const uploadData = await uploadResponse.json();
-      if (uploadResponse.ok) {
-        alert("Upload successful!");
-        // Return to homepage with university query param preserved
+      if (response.ok) {
+        alert("Syllabus uploaded successfully!");
         router.push(`/?university=${universityId}`);
       } else {
-        alert("Upload failed: " + uploadData.error);
+        alert("Upload failed.");
       }
     } catch (error) {
       console.error("Upload error", error);
@@ -82,58 +60,44 @@ export default function UploadSyllabus() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100">
-      <Navbar />
-      <main className="max-w-lg mx-auto px-4 py-6">
-        <h1 className="text-2xl font-bold mb-6 text-center">📤 Upload Syllabus</h1>
-        <label className="block mb-2 text-gray-700">University:</label>
-        <select
-          value={universityId}
-          onChange={(e) => setUniversityId(e.target.value)}
-          className="w-full p-2 border rounded-md mb-4"
-        >
-          <option value="">Select University</option>
-          <option value="3884b0da-b578-4e74-b921-e2d52dee1f71">Harvard</option>
-          <option value="some-other-university-id">Stanford</option>
-        </select>
-
-        <label className="block mb-2 text-gray-700">Course Name:</label>
-        <input
-          type="text"
-          placeholder="e.g., Systems Fundamentals"
-          value={courseName}
-          onChange={(e) => setCourseName(e.target.value)}
-          className="w-full p-2 border rounded-md mb-4"
+    <div>
+      <Navbar universityId={universityId} />
+      <div className="p-8">
+        <h2 className="text-2xl font-bold mb-4">Upload a Syllabus</h2>
+        <input 
+          type="file" 
+          onChange={handleFileChange} 
+          className="border p-2 mb-2 w-full" 
         />
-
-        <label className="block mb-2 text-gray-700">Course Code:</label>
-        <input
-          type="text"
-          placeholder="e.g., CSE 220"
-          value={courseCode}
-          onChange={(e) => setCourseCode(e.target.value)}
-          className="w-full p-2 border rounded-md mb-4"
+        <input 
+          type="text" 
+          placeholder="Course Name" 
+          value={courseName} 
+          onChange={(e) => setCourseName(e.target.value)} 
+          className="border p-2 mb-2 w-full" 
         />
-
-        <label className="block mb-2 text-gray-700">Department:</label>
-        <input
-          type="text"
-          placeholder="e.g., Computer Science"
-          value={department}
-          onChange={(e) => setDepartment(e.target.value)}
-          className="w-full p-2 border rounded-md mb-4"
+        <input 
+          type="text" 
+          placeholder="Department" 
+          value={department} 
+          onChange={(e) => setDepartment(e.target.value)} 
+          className="border p-2 mb-2 w-full" 
         />
-
-        <input type="file" onChange={handleFileChange} className="mb-4" />
-
-        <button
-          onClick={handleUpload}
+        <input 
+          type="text" 
+          placeholder="Course Code" 
+          value={courseCode} 
+          onChange={(e) => setCourseCode(e.target.value)} 
+          className="border p-2 mb-2 w-full" 
+        />
+        <button 
+          onClick={handleUpload} 
           disabled={uploading}
-          className="w-full bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-md"
+          className="bg-blue-500 text-white px-4 py-2 mt-2 hover:bg-blue-600 disabled:bg-blue-300"
         >
           {uploading ? 'Uploading...' : 'Upload'}
         </button>
-      </main>
+      </div>
     </div>
   );
 }
