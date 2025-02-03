@@ -19,8 +19,10 @@ export default function NotificationBar() {
 
   const handleUpload = () => {
     // Open the upload modal (assuming its id is "upload_modal")
-    const modal = document.getElementById("upload_modal");
-    modal?.showModal();
+    const modal = document.getElementById("upload_modal") as HTMLDialogElement | null;
+    if (modal) {
+      modal.showModal();
+    }
     setVisible(false);
   };
 
