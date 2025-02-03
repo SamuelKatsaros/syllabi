@@ -52,7 +52,7 @@ export default function UploadModal({ universityId: initialUniversityId = "" }: 
 
       if (response.ok) {
         alert("Syllabus uploaded successfully!");
-        document.getElementById("upload_modal")?.close();
+        (document.getElementById("upload_modal") as HTMLDialogElement | null)?.close();
         router.push(`/?university=${universityId}`);
       } else {
         alert("Upload failed.");
@@ -114,13 +114,13 @@ export default function UploadModal({ universityId: initialUniversityId = "" }: 
             >
               {uploading ? "Uploading..." : "Upload"}
             </button>
-            <button className="btn" onClick={() => document.getElementById("upload_modal")?.close()}>
+            <button className="btn" onClick={() => (document.getElementById("upload_modal") as HTMLDialogElement | null)?.close()}>
               Close
             </button>
           </div>
         </div>
       </dialog>
-      <button className="btn btn-ghost" onClick={() => document.getElementById("upload_modal")?.showModal()}>
+      <button className="btn btn-ghost" onClick={() => (document.getElementById("upload_modal") as HTMLDialogElement | null)?.showModal()}>
         <div className="indicator">
           Upload
         </div>
