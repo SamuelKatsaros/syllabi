@@ -7,11 +7,14 @@ import { useState, useEffect } from "react";
 import themes from "../themes.json"; // Import themes
 import UploadModal from "./UploadModal";
 
-export default function Navbar() {
+interface NavbarProps {
+  universityId: string;
+}
+
+export default function Navbar({ universityId }: NavbarProps) {
   const searchParams = useSearchParams();
   const router = useRouter();
   const pathname = usePathname();
-  const universityId = searchParams?.get("university") || "3884b0da-b578-4e74-b921-e2d52dee1f71";
   const theme = themes[universityId as keyof typeof themes] || themes.default;
   const [showSearch, setShowSearch] = useState(false);
   const [searchTerm, setSearchTerm] = useState(searchParams?.get("q") ?? "");
