@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import React, { Suspense, useEffect, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
 import Navbar from '../../components/Navbar';
 import SyllabusCard from '../../components/SyllabusCard';
@@ -102,70 +102,72 @@ export default function Home() {
   ] as string[];
 
   return (
-    <div className="min-h-screen bg-base-200">
-      <Navbar universityId={universityId} />
-      <NotificationBar />
-      <main className="container mx-auto px-4 py-8">
-        <SearchAndFilters
-          department={department}
-          courseCode={courseCode}
-          professor={professor}
-          semester={semester}
-          sort={sort}
-          uniqueDepartments={uniqueDepartments}
-          uniqueCourseCodes={uniqueCourseCodes}
-          uniqueProfessors={uniqueProfessors}
-          uniqueSemesters={uniqueSemesters}
-          onDepartmentChange={setDepartment}
-          onCourseCodeChange={setCourseCode}
-          onProfessorChange={setProfessor}
-          onSemesterChange={setSemester}
-          onSortChange={setSort}
-        />
-        {displayedSyllabi.length === 0 ? (
-          <p className="text-center text-gray-500">No syllabi found.</p>
-        ) : (
-          <>
-            <div className="flex flex-col gap-4">
-              {paginatedSyllabi.map((syllabus) => (
-                <SyllabusCard key={syllabus.id} syllabus={syllabus} />
-              ))}
-            </div>
-            {totalPages > 1 && (
-              <div className="flex justify-center mt-4">
-                <div className="join">
-                  {Array.from({ length: totalPages }, (_, index) => {
-                    const pageNumber = index + 1;
-                    const isActive = pageNumber === currentPage;
-                    return (
-                      <button
-                        key={pageNumber}
-                        className={`join-item btn ${isActive ? "btn-active" : ""}`}
-                        onClick={() => setCurrentPage(pageNumber)}
-                        style={
-                          isActive
-                            ? {
-                                backgroundColor: theme.primaryColor,
-                                color: "white",
-                                borderColor: theme.primaryColor,
-                              }
-                            : {
-                                backgroundColor: "white",
-                                color: theme.primaryColor,
-                                borderColor: theme.primaryColor,
-                              }
-                        }
-                      >
-                        {pageNumber}
-                      </button>
-                    );
-                  })}
-                </div>
+    <Suspense fallback={<div>Loading...</div>}>
+      <div className="min-h-screen bg-base-200">
+        <Navbar universityId={universityId} />
+        <NotificationBar />
+        <main className="container mx-auto px-4 py-8">
+          <SearchAndFilters
+            department={department}
+            courseCode={courseCode}
+            professor={professor}
+            semester={semester}
+            sort={sort}
+            uniqueDepartments={uniqueDepartments}
+            uniqueCourseCodes={uniqueCourseCodes}
+            uniqueProfessors={uniqueProfessors}
+            uniqueSemesters={uniqueSemesters}
+            onDepartmentChange={setDepartment}
+            onCourseCodeChange={setCourseCode}
+            onProfessorChange={setProfessor}
+            onSemesterChange={setSemester}
+            onSortChange={setSort}
+          />
+          {displayedSyllabi.length === 0 ? (
+            <p className="text-center text-gray-500">No syllabi found.</p>
+          ) : (
+            <>
+              <div className="flex flex-col gap-4">
+                {paginatedSyllabi.map((syllabus) => (
+                  <SyllabusCard key={syllabus.id} syllabus={syllabus} />
+                ))}
               </div>
-            )}
-          </>
-        )}
-      </main>
-    </div>
+              {totalPages > 1 && (
+                <div className="flex justify-center mt-4">
+                  <div className="join">
+                    {Array.from({ length: totalPages }, (_, index) => {
+                      const pageNumber = index + 1;
+                      const isActive = pageNumber === currentPage;
+                      return (
+                        <button
+                          key={pageNumber}
+                          className={`join-item btn ${isActive ? "btn-active" : ""}`}
+                          onClick={() => setCurrentPage(pageNumber)}
+                          style={
+                            isActive
+                              ? {
+                                  backgroundColor: theme.primaryColor,
+                                  color: "white",
+                                  borderColor: theme.primaryColor,
+                                }
+                              : {
+                                  backgroundColor: "white",
+                                  color: theme.primaryColor,
+                                  borderColor: theme.primaryColor,
+                                }
+                          }
+                        >
+                          {pageNumber}
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+              )}
+            </>
+          )}
+        </main>
+      </div>
+    </Suspense>
   );
 }
