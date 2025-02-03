@@ -1,5 +1,6 @@
 "use client";
 
+import React from "react";
 import Link from "next/link";
 import { useRouter, useSearchParams, usePathname } from "next/navigation";
 import { useState, useEffect } from "react";
@@ -73,6 +74,7 @@ export default function Navbar() {
 
       <div className="navbar-center">
         <Link href="/" className="btn btn-ghost text-xl flex items-center">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src={theme.logo} alt={`${theme.name} Logo`} className="h-8 w-8 mr-2" />
           {theme.name}
         </Link>

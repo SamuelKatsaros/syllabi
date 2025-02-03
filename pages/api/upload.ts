@@ -36,7 +36,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         return res.status(400).json({ error: "University ID is required." });
       }
 
-      let fileObj = Array.isArray(files.file) ? files.file[0] : files.file;
+      const fileObj = files.file;
 
       if (!fileObj || !course_id) {
         console.error("Missing required fields:", { file: fileObj, course_id, university_id });

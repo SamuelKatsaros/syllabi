@@ -23,7 +23,7 @@ interface Props {
 }
 
 export default function SyllabusCard({ syllabus }: Props) {
-  const { courses, file_url, created_at } = syllabus;
+  const { courses, file_url } = syllabus;
   const searchParams = useSearchParams();
   const universityId = searchParams?.get('university') ?? 'default';
   const theme = themes[universityId as keyof typeof themes] || themes.default;
