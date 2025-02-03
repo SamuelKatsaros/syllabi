@@ -6,7 +6,6 @@ import Navbar from '../../components/Navbar';
 import SyllabusCard from '../../components/SyllabusCard';
 import SearchAndFilters from '../../components/SearchAndFilters';
 import NotificationBar from '../../components/NotificationBar';
-import themes from '../../themes.json';
 
 interface Course {
   name: string;
@@ -37,7 +36,6 @@ function HomeContent() {
   const universityId =
     searchParams?.get('university') || '3884b0da-b578-4e74-b921-e2d52dee1f71';
   const q = searchParams?.get('q') || '';
-  const theme = themes[universityId as keyof typeof themes] || themes.default;
   const [syllabi, setSyllabi] = useState<Syllabus[]>([]);
   const [department, setDepartment] = useState('');
   const [courseCode, setCourseCode] = useState('');
@@ -45,8 +43,8 @@ function HomeContent() {
   const [semester, setSemester] = useState('');
   const [sort, setSort] = useState('latest');
 
-  // Pagination state
-  const [currentPage, setCurrentPage] = useState(1);
+  // Pagination state: only use currentPage since the setter is not needed.
+  const [currentPage] = useState(1);
   const itemsPerPage = 10;
 
   useEffect(() => {
@@ -71,7 +69,11 @@ function HomeContent() {
     currentPage * itemsPerPage
   );
   const uniqueDepartments = [
-    ...new Set(safeSyllabi.map((s) => s.courses?.department).filter(Boolean)),
+    ...new Set(
+      safeSyllabi
+        .map((s) => s.courses?.department)
+        .filter((d): d is string => Boolean(d))
+    ),
   ];
   const uniqueCourseCodes = [
     ...new Set(safeSyllabi.map((s) => s.courses?.course_code).filter(Boolean)),
