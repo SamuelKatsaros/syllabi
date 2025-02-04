@@ -74,7 +74,7 @@ export default function UploadModal({ universityId: initialUniversityId = "" }: 
               <input 
                 type="file" 
                 onChange={handleFileChange} 
-                className="file-input file-input-bordered w-full" 
+                className="file-input file-input-bordered w-full text-gray-800 bg-white" 
               />
             </div>
             <div className="form-control">
@@ -83,7 +83,7 @@ export default function UploadModal({ universityId: initialUniversityId = "" }: 
                 placeholder="Course Name" 
                 value={courseName} 
                 onChange={(e) => setCourseName(e.target.value)}
-                className="input input-bordered w-full" 
+                className="input input-bordered w-full text-gray-800 bg-white placeholder-gray-500" 
               />
             </div>
             <div className="form-control">
@@ -92,7 +92,7 @@ export default function UploadModal({ universityId: initialUniversityId = "" }: 
                 placeholder="Department" 
                 value={department} 
                 onChange={(e) => setDepartment(e.target.value)}
-                className="input input-bordered w-full" 
+                className="input input-bordered w-full text-gray-800 bg-white placeholder-gray-500" 
               />
             </div>
             <div className="form-control">
@@ -101,7 +101,7 @@ export default function UploadModal({ universityId: initialUniversityId = "" }: 
                 placeholder="Course Code" 
                 value={courseCode} 
                 onChange={(e) => setCourseCode(e.target.value)}
-                className="input input-bordered w-full" 
+                className="input input-bordered w-full text-gray-800 bg-white placeholder-gray-500" 
               />
             </div>
           </div>
