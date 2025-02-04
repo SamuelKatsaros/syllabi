@@ -67,16 +67,14 @@ export default function UploadModal({ universityId: initialUniversityId = "" }: 
   return (
     <>
       <dialog id="upload_modal" className="modal modal-bottom sm:modal-middle">
-        <div className="modal-box dark:bg-gray-800">
-          <h3 className="font-bold text-lg mb-4 dark:text-white" style={{ color: theme.primaryColor }}>
-            Upload a Syllabus
-          </h3>
+        <div className="modal-box">
+          <h3 className="font-bold text-lg mb-4" style={{ color: theme.primaryColor }}>Upload a Syllabus</h3>
           <div className="space-y-4">
             <div className="form-control">
               <input 
                 type="file" 
                 onChange={handleFileChange} 
-                className="file-input file-input-bordered w-full dark:bg-gray-700 dark:text-white" 
+                className="file-input file-input-bordered w-full" 
               />
             </div>
             <div className="form-control">
@@ -85,7 +83,7 @@ export default function UploadModal({ universityId: initialUniversityId = "" }: 
                 placeholder="Course Name" 
                 value={courseName} 
                 onChange={(e) => setCourseName(e.target.value)}
-                className="input input-bordered w-full dark:bg-gray-700 dark:text-white" 
+                className="input input-bordered w-full" 
               />
             </div>
             <div className="form-control">
@@ -94,7 +92,7 @@ export default function UploadModal({ universityId: initialUniversityId = "" }: 
                 placeholder="Department" 
                 value={department} 
                 onChange={(e) => setDepartment(e.target.value)}
-                className="input input-bordered w-full dark:bg-gray-700 dark:text-white" 
+                className="input input-bordered w-full" 
               />
             </div>
             <div className="form-control">
@@ -103,7 +101,7 @@ export default function UploadModal({ universityId: initialUniversityId = "" }: 
                 placeholder="Course Code" 
                 value={courseCode} 
                 onChange={(e) => setCourseCode(e.target.value)}
-                className="input input-bordered w-full dark:bg-gray-700 dark:text-white" 
+                className="input input-bordered w-full" 
               />
             </div>
           </div>
