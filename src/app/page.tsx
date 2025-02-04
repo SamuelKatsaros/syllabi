@@ -7,6 +7,7 @@ import SyllabusCard from '../../components/SyllabusCard';
 import SearchAndFilters from '../../components/SearchAndFilters'; // ✅ Ensure this is actually used
 import NotificationBar from '../../components/NotificationBar';
 import themes from '../../themes.json'; // ✅ Ensure this is actually used
+import { subdomainToUniversityId } from '@/utils/universityMappings';
 
 interface Course {
   name: string;
@@ -37,15 +38,7 @@ function HomeContent() {
   const host = typeof window !== "undefined" ? window.location.host : "";
   const subdomain = host.split(".")[0];
   
-  // Map subdomain to university ID
-  const subdomainToUniversityMap: Record<string, string> = {
-    stonybrook: '3884b0da-b578-4e74-b921-e2d52dee1f71',
-    nyu: '123e4567-e89b-12d3-a456-426614174000',
-    harvard: 'ebd6ad52-dedd-4381-be9f-f16fa0686fe0',
-    newpaltz: '83705fa6-af38-4e4d-9a72-6115befd90a1'
-  };
-
-  const universityId = subdomainToUniversityMap[subdomain] || searchParams?.get('university') || 'default';
+  const universityId = subdomainToUniversityId(subdomain) || searchParams?.get('university') || 'default';
   const q = searchParams?.get('q') || '';
   const [syllabi, setSyllabi] = useState<Syllabus[]>([]);
   const [department, setDepartment] = useState('');

@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { subdomainToUniversityId } from '@/utils/universityMappings';
 
 export function middleware(req: NextRequest) {
   const url = new URL(req.url);
@@ -24,8 +25,12 @@ export function middleware(req: NextRequest) {
     return NextResponse.json({ error: "Subdomain missing" }, { status: 400 });
   }
 
-  // Rewrite the request to include the subdomain
+  // Use the centralized mapping
+  const universityId = subdomainToUniversityId(subdomain);
+  
+  // Rewrite the request to include both subdomain and university
   url.searchParams.set("subdomain", subdomain);
+  url.searchParams.set("university", universityId);
   
   return NextResponse.rewrite(url);
 }
