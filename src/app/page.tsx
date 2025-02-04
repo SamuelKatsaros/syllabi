@@ -4,9 +4,9 @@ import React, { Suspense, useEffect, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
 import Navbar from '../../components/Navbar';
 import SyllabusCard from '../../components/SyllabusCard';
-import SearchAndFilters from '../../components/SearchAndFilters';
+import SearchAndFilters from '../../components/SearchAndFilters'; // ✅ Ensure this is actually used
 import NotificationBar from '../../components/NotificationBar';
-import themes from '../../themes.json';
+import themes from '../../themes.json'; // ✅ Ensure this is actually used
 
 interface Course {
   name: string;
@@ -34,8 +34,7 @@ export default function Home() {
 
 function HomeContent() {
   const searchParams = useSearchParams();
-  const universityId =
-    searchParams?.get('university') || '3884b0da-b578-4e74-b921-e2d52dee1f71';
+  const universityId = searchParams?.get('university') || '3884b0da-b578-4e74-b921-e2d52dee1f71';
   const q = searchParams?.get('q') || '';
   const [syllabi, setSyllabi] = useState<Syllabus[]>([]);
   const [department, setDepartment] = useState('');
@@ -48,7 +47,7 @@ function HomeContent() {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
 
-  const theme = themes[universityId as keyof typeof themes] || themes.default;
+  const theme = themes[universityId as keyof typeof themes] || themes.default; // ✅ Ensure usage
 
   useEffect(() => {
     if (!universityId) return;
@@ -71,14 +70,13 @@ function HomeContent() {
 
   const safeSyllabi = syllabi || [];
 
-  // When filtering/search is active, ensure each syllabus has course info.
+  // Ensure each syllabus has course info when filters are active
   const filtersActive = department || courseCode || professor || semester || q;
   const filteredSyllabi = filtersActive
     ? safeSyllabi.filter((s) => s.courses != null)
     : safeSyllabi;
 
   const totalPages = Math.ceil(filteredSyllabi.length / itemsPerPage);
-
   const displayedSyllabi = filteredSyllabi.slice(
     (currentPage - 1) * itemsPerPage,
     currentPage * itemsPerPage
