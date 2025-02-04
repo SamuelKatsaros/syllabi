@@ -1,41 +1,21 @@
-import { NextRequest, NextResponse } from "next/server";
-import universities from "./themes.json"; // Ensure university data is available
+import { NextRequest, NextResponse } from 'next/server';
 
 export function middleware(req: NextRequest) {
-  const host = req.headers.get("host") || "";
-  const subdomain = host.split(".")[0]; // Extract subdomain (e.g., "stonybrook" from "stonybrook.syllabus.website")
+  const url = new URL(req.url);
+  const hostname = req.headers.get('host') || '';
+  
+  // Special handling for localhost
+  const isLocalhost = hostname.includes('localhost');
+  const subdomain = isLocalhost
+    ? url.searchParams.get('subdomain') || 'default' // Fallback for localhost
+    : hostname.split('.')[0]; // Extract subdomain from real domain
 
-  console.log(`Incoming request to: ${host} | Extracted subdomain: ${subdomain}`);
+  console.log('Middleware - Host:', hostname);
+  console.log('Middleware - Extracted Subdomain:', subdomain);
 
-  // If it's the main domain, continue as usual
-  if (!subdomain || subdomain === "www" || subdomain === "syllabus") {
-    console.log("Main domain detected, skipping subdomain logic.");
-    return NextResponse.next();
+  if (!isLocalhost) {
+    url.searchParams.set('subdomain', subdomain);
   }
 
-  // Match subdomain to a university in themes.json
-  const universityEntry = Object.entries(universities).find(([id, data]) => {
-    return data.name.toLowerCase().replace(/\s+/g, "") === subdomain;
-  });
-
-  if (!universityEntry) {
-    console.log("No matching university found for subdomain:", subdomain);
-    return NextResponse.rewrite(new URL("/404", req.url));
-  }
-
-  const universityId = universityEntry[0];
-
-  console.log(`Mapped subdomain ${subdomain} -> University ID: ${universityId}`);
-
-  // Rewrite request with university ID
-  const newUrl = new URL(req.url);
-  newUrl.searchParams.set("university", universityId);
-
-  console.log(`Rewriting request to: ${newUrl.toString()}`);
-
-  return NextResponse.rewrite(newUrl);
+  return NextResponse.rewrite(url);
 }
-
-export const config = {
-  matcher: "/:path*",
-};
