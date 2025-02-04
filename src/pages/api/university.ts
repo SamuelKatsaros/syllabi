@@ -1,5 +1,4 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import universities from "../../../themes.json";
 
 export default function handler(req: NextApiRequest, res: NextApiResponse) {
   const universityId = req.headers["x-university-id"] as string;

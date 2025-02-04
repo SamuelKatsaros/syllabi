@@ -8,9 +8,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     return res.status(400).json({ error: "University ID is required" });
   }
 
-  let query = supabase
+  const query = supabase
     .from("syllabi")
-    .select("id, file_url, created_at, courses(id, name, department, course_code, professor, semester)")
+    .select("id, file_url, created_at, university_id, courses(id, name, department, course_code, professor, semester)")
     .eq("university_id", universityId);
 
   const { data, error } = await query;
