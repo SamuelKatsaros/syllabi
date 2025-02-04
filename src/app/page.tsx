@@ -36,7 +36,7 @@ function HomeContent() {
   const searchParams = useSearchParams();
   const host = typeof window !== "undefined" ? window.location.host : "";
   const subdomain = host.split(".")[0];
-  const universityEntry = Object.entries(themes).find(([key, data]) => {
+  const universityEntry = Object.entries(themes).find(([, data]) => {
     return data.name.toLowerCase().replace(/\s+/g, "") === subdomain;
   });
   const universityId = universityEntry ? universityEntry[0] : "default";
