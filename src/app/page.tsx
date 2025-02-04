@@ -36,9 +36,10 @@ function HomeContent() {
   const searchParams = useSearchParams();
   const host = typeof window !== "undefined" ? window.location.host : "";
   const subdomain = host.split(".")[0];
-  const universityId = Object.entries(themes).find(([id, data]) => {
+  const universityEntry = Object.entries(themes).find(([key, data]) => {
     return data.name.toLowerCase().replace(/\s+/g, "") === subdomain;
-  })?.[0] || "default";
+  });
+  const universityId = universityEntry ? universityEntry[0] : "default";
   const q = searchParams?.get('q') || '';
   const [syllabi, setSyllabi] = useState<Syllabus[]>([]);
   const [department, setDepartment] = useState('');
