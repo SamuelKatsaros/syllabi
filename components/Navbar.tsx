@@ -76,11 +76,11 @@ export default function Navbar({ universityId }: NavbarProps) {
       </div>
 
       <div className="navbar-center">
-        <Link href="/" className="btn btn-ghost text-xl flex items-center">
+        <div className="btn btn-ghost text-xl flex items-center">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src={theme.logo} alt={`${theme.name} Logo`} className="h-8 w-8 mr-2" />
           {theme.name}
-        </Link>
+        </div>
       </div>
 
       <div className="navbar-end">
