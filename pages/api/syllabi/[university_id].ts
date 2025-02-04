@@ -1,17 +1,23 @@
-import { NextApiRequest, NextApiResponse } from "next";
+import type { NextApiRequest, NextApiResponse } from "next";
 import { supabase } from "@/lib/supabase";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  const universityId = req.headers["x-university-id"] as string;
+  const { university_id, sort } = req.query;
 
-  if (!universityId) {
-    return res.status(400).json({ error: "University ID is required" });
+  if (!university_id || typeof university_id !== "string") {
+    return res.status(400).json({ error: "Missing or invalid university ID" });
   }
 
-  const query = supabase
+  let query = supabase
     .from("syllabi")
     .select("id, file_url, created_at, university_id, courses(id, name, department, course_code, professor, semester)")
-    .eq("university_id", universityId);
+    .eq("university_id", university_id);
+
+  if (sort === "alphabetical") {
+    query = query.order("name", { ascending: true });
+  } else if (sort === "latest") {
+    query = query.order("created_at", { ascending: false });
+  }
 
   const { data, error } = await query;
 

@@ -62,10 +62,14 @@ function HomeContent() {
     fetch(url)
       .then((res) => res.json())
       .then((data) => {
-        setSyllabi(data || []);
-        setCurrentPage(1); // reset pagination when new data is fetched
+        // Ensure data is always an array
+        setSyllabi(Array.isArray(data) ? data : []);
+        setCurrentPage(1); // Reset pagination when new data is fetched
       })
-      .catch((err) => console.error('Failed to fetch syllabi', err));
+      .catch((err) => {
+        console.error("Failed to fetch syllabi", err);
+        setSyllabi([]); // Default to empty array if fetch fails
+      });
   }, [universityId, department, courseCode, professor, semester, sort, q]);
 
   const safeSyllabi = syllabi || [];
