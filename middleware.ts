@@ -1,38 +1,32 @@
-import { NextResponse } from "next/server";
-import type { NextRequest } from "next/server";
-import universities from "./themes.json"; // Import themes
+import { NextRequest, NextResponse } from "next/server";
+import universities from "./themes.json"; // Ensure university data is available
 
 export function middleware(req: NextRequest) {
-  const { nextUrl } = req;
-  const hostname = nextUrl.hostname;
-  
-  // Extract subdomain (e.g., "stonybrook" from "stonybrook.syllabus.website")
-  const subdomain = hostname.split(".")[0];
+  const host = req.headers.get("host") || "";
+  const subdomain = host.split(".")[0]; // Extract subdomain (e.g., "stonybrook" from "stonybrook.syllabus.website")
 
-  // Ensure TypeScript allows indexing into themes.json
-  const universitiesTyped: Record<string, { name: string; primaryColor: string; logo: string }> = universities;
-
-  // Find the matching university ID
-  const universityId = Object.keys(universitiesTyped).find(
-    (id) => universitiesTyped[id].name.toLowerCase().replace(/\s+/g, "") === subdomain
-  );
-
-  if (universityId) {
-    // Clone request and attach universityId as a custom header
-    const requestHeaders = new Headers(req.headers);
-    requestHeaders.set("X-University-Id", universityId);
-
-    return NextResponse.next({
-      request: {
-        headers: requestHeaders,
-      },
-    });
+  if (!subdomain || subdomain === "www" || subdomain === "syllabus") {
+    return NextResponse.next(); // Let main domain requests continue normally
   }
 
-  return NextResponse.next();
+  const universityEntry = Object.entries(universities).find(([id, data]) => {
+    return data.name.toLowerCase().replace(/\s+/g, "") === subdomain;
+  });
+
+  if (!universityEntry) {
+    return NextResponse.rewrite(new URL("/404", req.url)); // Redirect if no match found
+  }
+
+  const universityId = universityEntry[0];
+
+  // Rebuild the request URL with the correct university_id
+  const newUrl = new URL(req.url);
+  newUrl.searchParams.set("university", universityId);
+
+  return NextResponse.rewrite(newUrl);
 }
 
-// Enable middleware for all pages
+// Enable middleware for all routes
 export const config = {
-  matcher: "/:path*",
+  matcher: "/:path*", // Applies to all routes
 };
