@@ -34,7 +34,11 @@ export default function Home() {
 
 function HomeContent() {
   const searchParams = useSearchParams();
-  const universityId = searchParams?.get('university') || '3884b0da-b578-4e74-b921-e2d52dee1f71';
+  const host = typeof window !== "undefined" ? window.location.host : "";
+  const subdomain = host.split(".")[0];
+  const universityId = Object.entries(themes).find(([id, data]) => {
+    return data.name.toLowerCase().replace(/\s+/g, "") === subdomain;
+  })?.[0] || "default";
   const q = searchParams?.get('q') || '';
   const [syllabi, setSyllabi] = useState<Syllabus[]>([]);
   const [department, setDepartment] = useState('');
