@@ -70,9 +70,6 @@ export default function UploadModal({ universityId: initialUniversityId = "" }: 
     setUploading(false);
   };
 
-  const currentYear = new Date().getFullYear();
-  const yearOptions = Array.from({ length: 5 }, (_, i) => currentYear + i);
-
   return (
     <>
       <dialog id="upload_modal" className="modal modal-bottom sm:modal-middle">
@@ -90,7 +87,7 @@ export default function UploadModal({ universityId: initialUniversityId = "" }: 
             <div className="form-control">
               <input 
                 type="text" 
-                placeholder="Course Number (e.g., MATH 131)" 
+                placeholder="Course Number (e.g., 101, 131)" 
                 value={courseNumber} 
                 onChange={(e) => setCourseNumber(e.target.value)}
                 className="input input-bordered w-full text-gray-800 bg-white placeholder-gray-500" 
@@ -99,7 +96,7 @@ export default function UploadModal({ universityId: initialUniversityId = "" }: 
             <div className="form-control">
               <input 
                 type="text" 
-                placeholder="Course Title (e.g., Calculus I)" 
+                placeholder="Course Name (e.g., Calculus I)" 
                 value={courseTitle} 
                 onChange={(e) => setCourseTitle(e.target.value)}
                 className="input input-bordered w-full text-gray-800 bg-white placeholder-gray-500" 
@@ -108,7 +105,7 @@ export default function UploadModal({ universityId: initialUniversityId = "" }: 
             <div className="form-control">
               <input 
                 type="text" 
-                placeholder="Department (e.g., Mathematics)" 
+                placeholder="Subject (e.g., BUS, CS)" 
                 value={department} 
                 onChange={(e) => setDepartment(e.target.value)}
                 className="input input-bordered w-full text-gray-800 bg-white placeholder-gray-500" 
@@ -135,15 +132,13 @@ export default function UploadModal({ universityId: initialUniversityId = "" }: 
                 <option value="Summer">Summer</option>
                 <option value="Winter">Winter</option>
               </select>
-              <select 
+              <input
+                type="number"
                 value={year}
                 onChange={(e) => setYear(e.target.value)}
-                className="select select-bordered flex-1 text-gray-800 bg-white"
-              >
-                {yearOptions.map((y) => (
-                  <option key={y} value={y}>{y}</option>
-                ))}
-              </select>
+                placeholder="Year"
+                className="input input-bordered flex-1 text-gray-800 bg-white"
+              />
             </div>
           </div>
           <div className="modal-action">
