@@ -55,12 +55,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             return;
           }
 
-          // Create course first
+          // Create course first with separate name and code
           const { data: courseData, error: courseError } = await supabase
             .from('courses')
             .insert([
               {
-                name: course_name,
+                name: course_name, // Store only the course title
                 department,
                 course_code,
                 professor,

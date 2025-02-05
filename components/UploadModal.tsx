@@ -44,7 +44,7 @@ export default function UploadModal({ universityId: initialUniversityId = "" }: 
     try {
       const formData = new FormData();
       formData.append("file", file);
-      formData.append("course_name", `${courseNumber}: ${courseTitle}`);
+      formData.append("course_name", courseTitle);
       formData.append("department", department);
       formData.append("course_code", courseNumber);
       formData.append("professor", professor);
