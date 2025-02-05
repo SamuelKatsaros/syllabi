@@ -87,19 +87,26 @@ export default function UploadModal({ universityId: initialUniversityId = "" }: 
             <div className="form-control">
               <input 
                 type="text" 
-                placeholder="Subject (e.g., BUS, CS)" 
-                value={department} 
-                onChange={(e) => setDepartment(e.target.value)}
+                placeholder="Course Name (e.g., Calculus I)" 
+                value={courseTitle} 
+                onChange={(e) => setCourseTitle(e.target.value)}
                 className="input input-bordered w-full text-gray-800 bg-white placeholder-gray-500" 
               />
             </div>
-            <div className="form-control">
+            <div className="form-control flex-row gap-2">
+              <input 
+                type="text" 
+                placeholder="Subject (e.g., BUS, CS)" 
+                value={department} 
+                onChange={(e) => setDepartment(e.target.value)}
+                className="input input-bordered flex-1 text-gray-800 bg-white placeholder-gray-500" 
+              />
               <input 
                 type="text" 
                 placeholder="Course Number (e.g., 101, 131)" 
                 value={courseNumber} 
                 onChange={(e) => setCourseNumber(e.target.value)}
-                className="input input-bordered w-full text-gray-800 bg-white placeholder-gray-500" 
+                className="input input-bordered flex-1 text-gray-800 bg-white placeholder-gray-500" 
               />
             </div>
             <div className="form-control">
