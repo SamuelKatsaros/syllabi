@@ -34,7 +34,9 @@ export default function SyllabusCard({ syllabus }: Props) {
       <div className="card-body flex-row justify-between items-center py-4">
         <div>
           <h2 className="text-lg font-bold" style={{ color: theme.primaryColor }}>
-            {courses?.course_code || 'Course code not available'}
+            {courses?.department && courses?.course_code 
+              ? `${courses.department}: ${courses.course_code}`
+              : 'Course code not available'}
           </h2>
           <p className="text-md text-black">
             {courses?.name || 'Course name not available'}
