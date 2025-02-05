@@ -82,7 +82,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           const fileName = `${Date.now()}.${fileExt}`;
           const filePath = `syllabi/${fileName}`;
 
-          const { data: storageData, error: storageError } = await supabase.storage
+          const { error: storageError } = await supabase.storage
             .from('syllabi')
             .upload(filePath, fileData, {
               contentType: uploadedFile.mimetype || 'application/pdf',
