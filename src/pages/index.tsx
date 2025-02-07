@@ -3,6 +3,7 @@
 import React from 'react';
 import themes from '../../themes.json';
 import Link from 'next/link';
+import Image from 'next/image';
 
 interface University {
   id: string;
@@ -12,7 +13,7 @@ interface University {
 }
 
 export default function HomePage() {
-  const universities = Object.entries(themes).map(([id, data]) => ({
+  const universities: University[] = Object.entries(themes).map(([id, data]) => ({
     id,
     name: data.name,
     primaryColor: data.primaryColor,
@@ -25,7 +26,13 @@ export default function HomePage() {
       <header className="bg-gradient-to-r from-blue-900 to-blue-700 text-white">
         <nav className="container mx-auto px-6 py-4 flex justify-between items-center">
           <div className="flex items-center">
-            <img src="/logos/default.png" alt="Syllabus Website Logo" className="h-10 w-auto" />
+            <Image 
+              src="/logos/default.png" 
+              alt="Syllabus Website Logo" 
+              width={40}
+              height={40}
+              className="h-10 w-auto"
+            />
             <span className="ml-3 text-xl font-bold">Syllabus Website</span>
           </div>
           <div className="hidden md:flex space-x-8">
@@ -68,9 +75,11 @@ export default function HomePage() {
                   />
                   <div className="p-6">
                     <div className="flex items-center mb-4">
-                      <img 
-                        src={university.logo} 
+                      <Image 
+                        src={university.logo}
                         alt={`${university.name} logo`}
+                        width={48}
+                        height={48}
                         className="h-12 w-12 object-contain"
                       />
                       <h3 
