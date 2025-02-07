@@ -55,7 +55,7 @@ export default function SearchAndFilters({
         </div>
         <ul
           tabIndex={0}
-          className="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-full z-50"
+          className="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-full z-50 max-h-60 overflow-y-auto"
         >
           <li>
             <a onClick={() => onDepartmentChange("")}>All Departments</a>
@@ -80,7 +80,7 @@ export default function SearchAndFilters({
         </div>
         <ul
           tabIndex={0}
-          className="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-full text-black z-50"
+          className="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-full text-black z-50 max-h-60 overflow-y-auto"
         >
           <li>
             <a onClick={() => onCourseCodeChange("")}>All Courses</a>
@@ -105,7 +105,7 @@ export default function SearchAndFilters({
         </div>
         <ul
           tabIndex={0}
-          className="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-full text-black z-50"
+          className="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-full text-black z-50 max-h-60 overflow-y-auto"
         >
           <li>
             <a onClick={() => onProfessorChange("")}>All Professors</a>
@@ -130,7 +130,7 @@ export default function SearchAndFilters({
         </div>
         <ul
           tabIndex={0}
-          className="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-full text-black z-50"
+          className="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-full text-black z-50 max-h-60 overflow-y-auto"
         >
           <li>
             <a onClick={() => onSemesterChange("")}>All Semesters</a>
