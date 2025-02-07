@@ -156,22 +156,77 @@ function HomeContent() {
         {totalPages > 1 && (
           <div className="flex justify-center mt-4">
             <div className="join">
-              {Array.from({ length: totalPages }, (_, i) => (
+              <button
+                className="join-item btn"
+                onClick={() => setCurrentPage(1)}
+                disabled={currentPage === 1}
+                style={{
+                  backgroundColor: currentPage === 1 ? theme.primaryColor : 'white',
+                  color: currentPage === 1 ? 'white' : theme.primaryColor,
+                  borderColor: theme.primaryColor
+                }}
+              >
+                1
+              </button>
+              
+              {currentPage > 3 && <span className="join-item btn">...</span>}
+              
+              {currentPage > 2 && (
                 <button
-                  key={i + 1}
-                  className={`join-item btn ${
-                    currentPage === i + 1 ? "btn-active" : ""
-                  }`}
-                  onClick={() => setCurrentPage(i + 1)}
+                  className="join-item btn"
+                  onClick={() => setCurrentPage(currentPage - 1)}
                   style={{
-                    backgroundColor: currentPage === i + 1 ? theme.primaryColor : 'white',
-                    color: currentPage === i + 1 ? 'white' : theme.primaryColor,
+                    backgroundColor: 'white',
+                    color: theme.primaryColor,
                     borderColor: theme.primaryColor
                   }}
                 >
-                  {i + 1}
+                  {currentPage - 1}
                 </button>
-              ))}
+              )}
+              
+              {currentPage !== 1 && currentPage !== totalPages && (
+                <button
+                  className="join-item btn btn-active"
+                  style={{
+                    backgroundColor: theme.primaryColor,
+                    color: 'white',
+                    borderColor: theme.primaryColor
+                  }}
+                >
+                  {currentPage}
+                </button>
+              )}
+              
+              {currentPage < totalPages - 1 && (
+                <button
+                  className="join-item btn"
+                  onClick={() => setCurrentPage(currentPage + 1)}
+                  style={{
+                    backgroundColor: 'white',
+                    color: theme.primaryColor,
+                    borderColor: theme.primaryColor
+                  }}
+                >
+                  {currentPage + 1}
+                </button>
+              )}
+              
+              {currentPage < totalPages - 2 && <span className="join-item btn">...</span>}
+              
+              {currentPage !== totalPages && (
+                <button
+                  className="join-item btn"
+                  onClick={() => setCurrentPage(totalPages)}
+                  style={{
+                    backgroundColor: currentPage === totalPages ? theme.primaryColor : 'white',
+                    color: currentPage === totalPages ? 'white' : theme.primaryColor,
+                    borderColor: theme.primaryColor
+                  }}
+                >
+                  {totalPages}
+                </button>
+              )}
             </div>
           </div>
         )}
