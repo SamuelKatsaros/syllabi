@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { subdomainToUniversityId } from '@/utils/universityMappings';
+import themes from './themes.json';
 
 export function middleware(req: NextRequest) {
   const url = new URL(req.url);
@@ -13,24 +14,21 @@ export function middleware(req: NextRequest) {
     }
   }
 
-  // Handle all favicon-related requests including direct .ico files
-  if (url.pathname === '/favicon.ico' || 
-      url.pathname.startsWith('/favicons/') || 
-      url.pathname.endsWith('.ico')) {
-    console.log('Favicon request:', { subdomain, path: url.pathname });
-    const faviconUrl = new URL('/api/favicon', req.url);
-    if (subdomain) {
-      faviconUrl.searchParams.set('subdomain', subdomain);
-    }
-    return NextResponse.rewrite(faviconUrl);
+  // Let Next.js handle static files directly
+  if (url.pathname.startsWith('/favicons/') || url.pathname.startsWith('/logos/')) {
+    return NextResponse.next();
+  }
+
+  // Handle favicon.ico requests
+  if (url.pathname === '/favicon.ico') {
+    const universityId = subdomain ? subdomainToUniversityId(subdomain) : 'default';
+    const theme = themes[universityId as keyof typeof themes] || themes.default;
+    return NextResponse.rewrite(new URL(theme.favicon, req.url));
   }
 
   // Regular request handling
   if (!subdomain) {
-    subdomain = url.searchParams.get('subdomain') || undefined;
-    if (!subdomain) {
-      return NextResponse.json({ error: "Subdomain missing" }, { status: 400 });
-    }
+    subdomain = url.searchParams.get('subdomain') || 'default';
   }
 
   const universityId = subdomainToUniversityId(subdomain);
@@ -43,9 +41,7 @@ export function middleware(req: NextRequest) {
 export const config = {
   matcher: [
     '/api/:path*',
-    '/((?!api|_next/static|_next/image|_next/data).*)',
-    '/favicon.ico',
-    '/favicons/:path*',
-    '/:subdomain.ico'
+    '/((?!api|_next/static|_next/image|_next/data|favicons|logos).*)',
+    '/favicon.ico'
   ]
 };
