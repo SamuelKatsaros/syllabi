@@ -3,6 +3,18 @@ const nextConfig = {
   async rewrites() {
     return {
       beforeFiles: [
+        // Handle favicon.ico requests
+        {
+          source: '/favicon.ico',
+          has: [
+            {
+              type: 'host',
+              value: '(?<subdomain>[^.]+).syllabus.website',
+            },
+          ],
+          destination: '/api/favicon?subdomain=:subdomain',
+        },
+        // Existing subdomain handling
         {
           source: '/:path*',
           has: [
