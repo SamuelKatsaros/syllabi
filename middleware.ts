@@ -13,18 +13,18 @@ export function middleware(req: NextRequest) {
     }
   }
 
-  if (!subdomain) {
-    subdomain = url.searchParams.get('subdomain') || undefined;
-  }
-
   // Handle favicon requests
   if (url.pathname === '/favicon.ico') {
-    return NextResponse.rewrite(new URL(`/api/favicon?subdomain=${subdomain}`, req.url));
+    const universityId = subdomainToUniversityId(subdomain || '');
+    return NextResponse.rewrite(new URL(`/api/favicon?subdomain=${subdomain || 'default'}`, req.url));
   }
 
   // Regular request handling
   if (!subdomain) {
-    return NextResponse.json({ error: "Subdomain missing" }, { status: 400 });
+    subdomain = url.searchParams.get('subdomain') || undefined;
+    if (!subdomain) {
+      return NextResponse.json({ error: "Subdomain missing" }, { status: 400 });
+    }
   }
 
   const universityId = subdomainToUniversityId(subdomain);

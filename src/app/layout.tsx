@@ -41,19 +41,13 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        <link 
-          rel="icon" 
-          type="image/x-icon" 
-          href={theme.favicon} 
-        />
         <Script
           async
           src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`}
           strategy="afterInteractive"
         />
         <Script id="google-analytics" strategy="afterInteractive">
-          {`
-            window.dataLayer = window.dataLayer || [];
+          {`            window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
             gtag('js', new Date());
             gtag('config', '${GA_MEASUREMENT_ID}');
@@ -68,3 +62,4 @@ export default function RootLayout({
     </html>
   );
 }
+
