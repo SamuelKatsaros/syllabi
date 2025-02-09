@@ -16,7 +16,11 @@ export function middleware(req: NextRequest) {
   // Handle all favicon-related requests
   if (url.pathname === '/favicon.ico' || url.pathname.startsWith('/favicons/')) {
     console.log('Favicon request:', { subdomain, path: url.pathname });
-    return NextResponse.rewrite(new URL(`/api/favicon?subdomain=${subdomain || 'default'}`, req.url));
+    const faviconUrl = new URL('/api/favicon', req.url);
+    if (subdomain) {
+      faviconUrl.searchParams.set('subdomain', subdomain);
+    }
+    return NextResponse.rewrite(faviconUrl);
   }
 
   // Regular request handling
@@ -37,8 +41,8 @@ export function middleware(req: NextRequest) {
 export const config = {
   matcher: [
     '/api/:path*',
-    '/((?!api|_next/static|_next/image).*)',
+    '/((?!api|_next/static|_next/image|_next/data).*)',
     '/favicon.ico',
     '/favicons/:path*'
-  ],
+  ]
 };

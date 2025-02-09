@@ -4,6 +4,16 @@ const nextConfig = {
     return {
       beforeFiles: [
         {
+          source: '/favicon.ico',
+          has: [
+            {
+              type: 'host',
+              value: '(?<subdomain>[^.]+).syllabus.website',
+            },
+          ],
+          destination: '/api/favicon?subdomain=:subdomain',
+        },
+        {
           source: '/:path*',
           has: [
             {
