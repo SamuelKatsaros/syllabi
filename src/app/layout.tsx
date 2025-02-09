@@ -41,6 +41,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
+        <link 
+          rel="icon" 
+          type="image/x-icon" 
+          href={theme.favicon} 
+        />
         <Script
           async
           src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`}
