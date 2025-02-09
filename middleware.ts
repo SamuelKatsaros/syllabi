@@ -13,9 +13,9 @@ export function middleware(req: NextRequest) {
     }
   }
 
-  // Handle favicon requests
-  if (url.pathname === '/favicon.ico') {
-    const universityId = subdomainToUniversityId(subdomain || '');
+  // Handle all favicon-related requests
+  if (url.pathname === '/favicon.ico' || url.pathname.startsWith('/favicons/')) {
+    console.log('Favicon request:', { subdomain, path: url.pathname });
     return NextResponse.rewrite(new URL(`/api/favicon?subdomain=${subdomain || 'default'}`, req.url));
   }
 
@@ -38,6 +38,7 @@ export const config = {
   matcher: [
     '/api/:path*',
     '/((?!api|_next/static|_next/image).*)',
-    '/favicon.ico'
+    '/favicon.ico',
+    '/favicons/:path*'
   ],
 };
