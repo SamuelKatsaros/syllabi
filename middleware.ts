@@ -16,7 +16,12 @@ export function middleware(req: NextRequest) {
 
   // Special handling for home subdomain
   if (subdomain === 'home') {
-    // Ensure we're not already on the home page to prevent redirect loops
+    // Don't rewrite API routes for home subdomain
+    if (url.pathname.startsWith('/api/')) {
+      return NextResponse.next();
+    }
+    
+    // Rewrite to the home page for non-API routes
     if (!url.pathname.startsWith('/home')) {
       return NextResponse.rewrite(new URL('/home', req.url));
     }
