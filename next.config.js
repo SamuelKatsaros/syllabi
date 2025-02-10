@@ -4,6 +4,16 @@ const nextConfig = {
     return {
       beforeFiles: [
         {
+          source: '/:path*',
+          has: [
+            {
+              type: 'host',
+              value: 'home.syllabus.website',
+            },
+          ],
+          destination: '/home',
+        },
+        {
           source: '/favicon.ico',
           has: [
             {

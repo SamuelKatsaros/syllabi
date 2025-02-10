@@ -16,8 +16,9 @@ export function middleware(req: NextRequest) {
 
   // Special handling for home subdomain
   if (subdomain === 'home') {
-    // Don't add any university parameters for home subdomain
-    return NextResponse.next();
+    // Rewrite to the home page
+    const newUrl = new URL('/home', req.url);
+    return NextResponse.rewrite(newUrl);
   }
 
   // Let Next.js handle static files directly
