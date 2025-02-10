@@ -16,13 +16,15 @@ export function middleware(req: NextRequest) {
 
   // Special handling for home subdomain
   if (subdomain === 'home') {
-    // Rewrite to the home page
-    const newUrl = new URL('/home', req.url);
-    return NextResponse.rewrite(newUrl);
+    // Ensure we're not already on the home page to prevent redirect loops
+    if (!url.pathname.startsWith('/home')) {
+      return NextResponse.rewrite(new URL('/home', req.url));
+    }
+    return NextResponse.next();
   }
 
   // Let Next.js handle static files directly
-  if (url.pathname.startsWith('/favicons/') || url.pathname.startsWith('/logos/')) {
+  if (url.pathname.startsWith('/favicons/') || url.pathname.startsWith('/logos/') || url.pathname.startsWith('/_next/')) {
     return NextResponse.next();
   }
 
