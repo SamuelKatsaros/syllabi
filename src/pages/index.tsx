@@ -149,7 +149,7 @@ export default function HomePage() {
           <h2 className="text-3xl font-bold text-center mb-12">Get in Touch</h2>
           <div className="max-w-xl mx-auto text-center">
             <p className="text-gray-600 mb-8">
-              Have questions or want to contribute to our platform? We'd love to hear from you!
+              Have questions or want to contribute to our platform? We&apos;d love to hear from you!
             </p>
             <a 
               href="mailto:contact@syllabus.website"
