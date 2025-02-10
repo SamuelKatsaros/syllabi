@@ -18,7 +18,7 @@ const nextConfig = {
           has: [
             {
               type: 'host',
-              value: '(?<subdomain>[^.]+).syllabus.website',
+              value: '(?!home)(?<subdomain>[^.]+).syllabus.website',
             },
           ],
           destination: '/:path*?subdomain=:subdomain',

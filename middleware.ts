@@ -14,6 +14,12 @@ export function middleware(req: NextRequest) {
     }
   }
 
+  // Special handling for home subdomain
+  if (subdomain === 'home') {
+    // Don't add any university parameters for home subdomain
+    return NextResponse.next();
+  }
+
   // Let Next.js handle static files directly
   if (url.pathname.startsWith('/favicons/') || url.pathname.startsWith('/logos/')) {
     return NextResponse.next();
@@ -26,17 +32,15 @@ export function middleware(req: NextRequest) {
     return NextResponse.rewrite(new URL(theme.favicon, req.url));
   }
 
-  // Regular request handling
-  if (!subdomain) {
-    subdomain = url.searchParams.get('subdomain') || 'default';
+  // Regular request handling for university subdomains
+  if (subdomain && subdomain !== 'home') {
+    const universityId = subdomainToUniversityId(subdomain);
+    url.searchParams.set("subdomain", subdomain);
+    url.searchParams.set("university", universityId);
+    return NextResponse.rewrite(url);
   }
 
-  // Set university ID based on subdomain
-  const universityId = subdomainToUniversityId(subdomain);
-  url.searchParams.set("subdomain", subdomain);
-  url.searchParams.set("university", universityId);
-  
-  return NextResponse.rewrite(url);
+  return NextResponse.next();
 }
 
 export const config = {
