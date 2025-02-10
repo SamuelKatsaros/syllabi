@@ -26,6 +26,28 @@ const nextConfig = {
       ],
     };
   },
+  images: {
+    domains: ['home.syllabus.website'],
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: '*.syllabus.website',
+      },
+    ],
+  },
+  async headers() {
+    return [
+      {
+        source: '/:path*',
+        headers: [
+          {
+            key: 'Access-Control-Allow-Origin',
+            value: 'https://home.syllabus.website',
+          },
+        ],
+      },
+    ];
+  },
 };
 
 module.exports = nextConfig; 

@@ -31,6 +31,7 @@ export function middleware(req: NextRequest) {
     subdomain = url.searchParams.get('subdomain') || 'default';
   }
 
+  // Set university ID based on subdomain
   const universityId = subdomainToUniversityId(subdomain);
   url.searchParams.set("subdomain", subdomain);
   url.searchParams.set("university", universityId);
@@ -40,8 +41,7 @@ export function middleware(req: NextRequest) {
 
 export const config = {
   matcher: [
-    '/api/:path*',
-    '/((?!api|_next/static|_next/image|_next/data|favicons|logos).*)',
-    '/favicon.ico'
-  ]
+    '/((?!_next/static|_next/image|favicons|logos|api).*)',
+    '/favicon.ico',
+  ],
 };
