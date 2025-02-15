@@ -12,6 +12,7 @@ interface University {
   primaryColor: string;
   logo: string;
   syllabusCount?: number;
+  subdomain: string;
 }
 
 export default function HomePage() {
@@ -26,6 +27,7 @@ export default function HomePage() {
       primaryColor: data.primaryColor,
       logo: data.logo,
       syllabusCount: Math.floor(Math.random() * 100) + 20,
+      subdomain: data.subdomain,
     }))
     .filter(uni => uni.id !== 'default' && uni.id !== 'home')
     .filter(uni => 
@@ -151,8 +153,8 @@ export default function HomePage() {
                   </div>
                   <Link
                     href={`${process.env.NODE_ENV === 'development' 
-                      ? `http://${university.id.toLowerCase()}.localhost:3000` 
-                      : `https://${university.id.toLowerCase()}.syllabus.website`}`}
+                      ? `http://${university.subdomain}.localhost:3000` 
+                      : `https://${university.subdomain}.syllabus.website`}`}
                     className="btn btn-sm btn-primary"
                   >
                     Visit
