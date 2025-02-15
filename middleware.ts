@@ -14,6 +14,11 @@ export function middleware(req: NextRequest) {
     }
   }
 
+  // Allow /home access on all subdomains
+  if (url.pathname === '/home') {
+    return NextResponse.next();
+  }
+
   // Special handling for home subdomain
   if (subdomain === 'home') {
     // Don't rewrite API routes for home subdomain
@@ -53,7 +58,6 @@ export function middleware(req: NextRequest) {
 
 export const config = {
   matcher: [
-    '/((?!_next/static|_next/image|favicons|logos|api).*)',
-    '/favicon.ico',
+    '/((?!api|_next/static|_next/image|favicon.ico).*)',
   ],
 };
