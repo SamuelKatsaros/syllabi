@@ -19,7 +19,7 @@ export default function HomePage() {
   const [searchQuery, setSearchQuery] = useState('');
   const [isScrolled, setIsScrolled] = useState(false);
 
-  const universities = Object.keys(themes)
+  const universities: University[] = Object.keys(themes)
     .filter(id => id !== 'default' && id !== 'home')
     .map(id => {
       const theme = themes[id as keyof typeof themes];
@@ -29,7 +29,7 @@ export default function HomePage() {
         primaryColor: theme.primaryColor,
         logo: theme.logo,
         subdomain: theme.subdomain,
-      };
+      } as University;
     })
     .filter(uni => 
       uni.name.toLowerCase().includes(searchQuery.toLowerCase())
@@ -144,6 +144,7 @@ export default function HomePage() {
                       height={48}
                       className="h-12 w-12 object-contain rounded-full bg-gray-50 p-1"
                       priority
+                      unoptimized
                     />
                     <div className="ml-4">
                       <h3 className="text-lg font-semibold text-gray-900">
