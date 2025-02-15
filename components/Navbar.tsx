@@ -44,7 +44,7 @@ export default function Navbar({ universityId }: NavbarProps) {
   };
 
   return (
-    <div className="navbar text-white w-full overflow-x-hidden px-2 md:px-4" style={{ backgroundColor: theme.primaryColor }}>
+    <div className="navbar text-white" style={{ backgroundColor: theme.primaryColor }}>
       <div className="navbar-start">
         <div className="dropdown">
           <div tabIndex={0} role="button" className="btn btn-ghost btn-circle">
@@ -67,9 +67,6 @@ export default function Navbar({ universityId }: NavbarProps) {
             className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow text-black">
             <li>
               <Link href="/">Homepage</Link>
-            </li>
-            <li>
-              <Link href="/home">University Directory</Link>
             </li>
             <li>
               <Link href="/about">About</Link>
