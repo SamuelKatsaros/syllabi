@@ -21,17 +21,14 @@ export default function HomePage() {
   const [isScrolled, setIsScrolled] = useState(false);
 
   const universities: University[] = Object.entries(themes)
-    .map(([id, data]) => {
-      const theme = themes[id as keyof typeof themes];
-      return {
-        id,
-        name: theme.name,
-        primaryColor: theme.primaryColor,
-        logo: theme.logo,
-        syllabusCount: Math.floor(Math.random() * 100) + 20,
-        subdomain: theme.subdomain,
-      };
-    })
+    .map(([id, data]) => ({
+      id,
+      name: data.name,
+      primaryColor: data.primaryColor,
+      logo: data.logo,
+      syllabusCount: Math.floor(Math.random() * 100) + 20,
+      subdomain: data.subdomain,
+    }))
     .filter(uni => uni.id !== 'default' && uni.id !== 'home')
     .filter(uni => 
       uni.name.toLowerCase().includes(searchQuery.toLowerCase())
