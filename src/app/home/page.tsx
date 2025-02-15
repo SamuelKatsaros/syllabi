@@ -41,9 +41,9 @@ export default function HomePage() {
   }, []);
 
   return (
-    <div className={`min-h-screen ${darkMode ? 'dark bg-gray-900' : 'bg-gray-50'}`}>
+    <div className="min-h-screen bg-white">
       <nav className={`fixed w-full z-50 transition-all duration-300 ${
-        isScrolled ? 'bg-white/80 dark:bg-gray-900/80 backdrop-blur-md shadow-md' : 'bg-transparent'
+        isScrolled ? 'bg-white shadow-md' : 'bg-white'
       }`}>
         <div className="container mx-auto px-4 py-3 flex items-center justify-between">
           <div className="flex items-center gap-8">
@@ -71,8 +71,8 @@ export default function HomePage() {
               <input
                 type="text"
                 placeholder="Search universities..."
-                className="pl-10 pr-4 py-2 rounded-full border border-gray-200 dark:border-gray-700 
-                         focus:outline-none focus:ring-2 focus:ring-blue-500 w-64 bg-white/90 dark:bg-gray-800/90"
+                className="pl-10 pr-4 py-2 rounded-full border border-gray-200
+                         focus:outline-none focus:ring-2 focus:ring-blue-500 w-64 bg-white"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
               />
@@ -82,13 +82,13 @@ export default function HomePage() {
           <div className="flex items-center gap-4">
             <button className="btn btn-ghost btn-circle" onClick={() => setDarkMode(!darkMode)}>
               {darkMode ? (
-                <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <svg className="h-5 w-5 text-gray-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} 
                     d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" 
                   />
                 </svg>
               ) : (
-                <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <svg className="h-5 w-5 text-gray-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} 
                     d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"
                   />
@@ -112,10 +112,10 @@ export default function HomePage() {
         animate={{ opacity: 1 }}
         className="pt-24 pb-12 text-center"
       >
-        <h1 className="text-4xl font-bold mb-4 dark:text-white">
+        <h1 className="text-4xl font-bold mb-4 text-gray-900">
           Syllabus Website
         </h1>
-        <p className="text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
+        <p className="text-gray-600 max-w-2xl mx-auto">
           Browse and access syllabi from universities across the country.
         </p>
       </motion.div>
@@ -126,7 +126,7 @@ export default function HomePage() {
             <motion.div
               key={university.id}
               whileHover={{ y: -5 }}
-              className="bg-white dark:bg-gray-800 rounded-xl shadow-sm hover:shadow-md 
+              className="bg-white rounded-xl shadow-sm hover:shadow-md 
                        transition-all duration-300 overflow-hidden"
             >
               <div className="h-2" style={{ backgroundColor: university.primaryColor }} />
@@ -141,10 +141,10 @@ export default function HomePage() {
                       className="h-12 w-12 object-contain rounded-full bg-gray-50 p-1"
                     />
                     <div className="ml-4">
-                      <h3 className="text-lg font-semibold dark:text-white">
+                      <h3 className="text-lg font-semibold text-gray-900">
                         {university.name}
                       </h3>
-                      <p className="text-sm text-gray-500 dark:text-gray-400">
+                      <p className="text-sm text-gray-500">
                         {university.syllabusCount} syllabi available
                       </p>
                     </div>

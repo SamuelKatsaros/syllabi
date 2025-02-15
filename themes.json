@@ -1,7 +1,7 @@
 {
     "default": {
       "name": "Syllabus Website",
-      "primaryColor": "#1E40AF",
+      "primaryColor": "#89CFF0",
       "logo": "/logos/default.png",
       "favicon": "/favicons/default.ico",
       "subdomain": "home"
