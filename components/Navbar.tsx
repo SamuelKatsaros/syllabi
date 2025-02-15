@@ -44,7 +44,7 @@ export default function Navbar({ universityId }: NavbarProps) {
   };
 
   return (
-    <div className="navbar text-white" style={{ backgroundColor: theme.primaryColor }}>
+    <div className="navbar text-white w-full overflow-x-hidden px-2 md:px-4" style={{ backgroundColor: theme.primaryColor }}>
       <div className="navbar-start">
         <div className="dropdown">
           <div tabIndex={0} role="button" className="btn btn-ghost btn-circle">
@@ -79,7 +79,7 @@ export default function Navbar({ universityId }: NavbarProps) {
         <div className="btn btn-ghost text-xl flex items-center">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src={theme.logo} alt={`${theme.name} Logo`} className="h-8 w-8 mr-2" />
-          {theme.name}
+          <span className="truncate max-w-[150px] md:max-w-none">{theme.name}</span>
         </div>
       </div>
 
