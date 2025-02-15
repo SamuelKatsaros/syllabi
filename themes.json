@@ -3,37 +3,43 @@
       "name": "Syllabus Website",
       "primaryColor": "#1E40AF",
       "logo": "/logos/default.png",
-      "favicon": "/favicons/default.ico"
+      "favicon": "/favicons/default.ico",
+      "subdomain": "home"
     },
     "3884b0da-b578-4e74-b921-e2d52dee1f71": {
       "name": "Stony Brook University",
       "primaryColor": "#990000",
       "logo": "/logos/sbu.png",
-      "favicon": "/favicons/sbu.ico"
+      "favicon": "/favicons/sbu.ico",
+      "subdomain": "sbu"
     },
     "123e4567-e89b-12d3-a456-426614174000": {
       "name": "New York University",
       "primaryColor": "#57068C",
       "logo": "/logos/nyu.png",
-      "favicon": "/favicons/nyu.ico"
+      "favicon": "/favicons/nyu.ico",
+      "subdomain": "nyu"
     },
     "ebd6ad52-dedd-4381-be9f-f16fa0686fe0":{
       "name": "Harvard College",
       "primaryColor": "#A51C30",
       "logo": "/logos/harvard.png",
-      "favicon": "/favicons/harvard.ico"
+      "favicon": "/favicons/harvard.ico",
+      "subdomain": "harvard"
     },
     "83705fa6-af38-4e4d-9a72-6115befd90a1":{
       "name": "SUNY New Paltz",
       "primaryColor": "#003e7d",
       "logo": "/logos/newpaltz.png",
-      "favicon": "/favicons/newpaltz.ico"
+      "favicon": "/favicons/newpaltz.ico",
+      "subdomain": "newpaltz"
     },
     "937be84f-c8df-40ea-9fc2-e4493d627206": {
       "name": "Suffolk County Community College",
       "primaryColor": "#001489",
       "logo": "/logos/sccc.png",
-      "favicon": "/favicons/sccc.ico"
+      "favicon": "/favicons/sccc.ico",
+      "subdomain": "sccc"
     }
   }
   

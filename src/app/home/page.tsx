@@ -19,21 +19,19 @@ export default function HomePage() {
   const [searchQuery, setSearchQuery] = useState('');
   const [isScrolled, setIsScrolled] = useState(false);
 
-  // Filter universities and add mock syllabus count
   const universities: University[] = Object.entries(themes)
     .map(([id, data]) => ({
       id,
       name: data.name,
       primaryColor: data.primaryColor,
       logo: data.logo,
-      syllabusCount: Math.floor(Math.random() * 100) + 20, // Mock data
+      syllabusCount: Math.floor(Math.random() * 100) + 20,
     }))
     .filter(uni => uni.id !== 'default' && uni.id !== 'home')
     .filter(uni => 
       uni.name.toLowerCase().includes(searchQuery.toLowerCase())
     );
 
-  // Handle scroll for sticky header
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 20);
@@ -44,7 +42,6 @@ export default function HomePage() {
 
   return (
     <div className={`min-h-screen ${darkMode ? 'dark bg-gray-900' : 'bg-gray-50'}`}>
-      {/* Sticky Navigation */}
       <nav className={`fixed w-full z-50 transition-all duration-300 ${
         isScrolled ? 'bg-white/80 dark:bg-gray-900/80 backdrop-blur-md shadow-md' : 'bg-transparent'
       }`}>
@@ -110,21 +107,19 @@ export default function HomePage() {
         </div>
       </nav>
 
-      {/* Hero Section with Animation */}
       <motion.div 
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         className="pt-24 pb-12 text-center"
       >
         <h1 className="text-4xl font-bold mb-4 dark:text-white">
-          University Directory
+          Syllabus Website
         </h1>
         <p className="text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
-          Browse and access syllabi from leading universities across the country.
+          Browse and access syllabi from universities across the country.
         </p>
       </motion.div>
 
-      {/* University Grid */}
       <div className="container mx-auto px-4 pb-20">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {universities.map((university) => (
