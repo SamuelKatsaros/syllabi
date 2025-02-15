@@ -5,6 +5,7 @@ import themes from '../../../themes.json';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { Search, Upload, Moon, Sun } from 'lucide-react';
+import Link from 'next/link';
 
 interface University {
   id: string;
@@ -126,14 +127,14 @@ export default function HomePage() {
                       </p>
                     </div>
                   </div>
-                  <a
-                    href={`${window.location.protocol}//${university.id.toLowerCase()}${
-                      window.location.host.includes('localhost') ? '.localhost:3000' : '.syllabus.website'
-                    }`}
+                  <Link
+                    href={`${process.env.NODE_ENV === 'development' 
+                      ? `http://${university.id.toLowerCase()}.localhost:3000` 
+                      : `https://${university.id.toLowerCase()}.syllabus.website`}`}
                     className="btn btn-sm btn-primary"
                   >
                     Visit
-                  </a>
+                  </Link>
                 </div>
               </div>
             </motion.div>
