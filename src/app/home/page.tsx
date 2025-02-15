@@ -11,7 +11,6 @@ interface University {
   name: string;
   primaryColor: string;
   logo: string;
-  syllabusCount?: number;
   subdomain: string;
 }
 
@@ -20,28 +19,29 @@ export default function HomePage() {
   const [searchQuery, setSearchQuery] = useState('');
   const [isScrolled, setIsScrolled] = useState(false);
 
-  const universities: University[] = Object.entries(themes)
-    .map(([id, data]) => ({
-      id,
-      name: data.name,
-      primaryColor: data.primaryColor,
-      logo: data.logo,
-      syllabusCount: Math.floor(Math.random() * 100) + 20,
-      subdomain: data.subdomain,
-    }))
-    .filter(uni => uni.id !== 'default' && uni.id !== 'home')
+  const universities = Object.keys(themes)
+    .filter(id => id !== 'default' && id !== 'home')
+    .map(id => {
+      const theme = themes[id as keyof typeof themes];
+      return {
+        id,
+        name: theme.name,
+        primaryColor: theme.primaryColor,
+        logo: theme.logo,
+        subdomain: theme.subdomain,
+      };
+    })
     .filter(uni => 
       uni.name.toLowerCase().includes(searchQuery.toLowerCase())
     );
 
   useEffect(() => {
-    console.log('Universities:', universities); // Debug log
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 20);
     };
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
-  }, [universities]);
+  }, []);
 
   return (
     <div className="min-h-screen bg-white">
@@ -102,10 +102,10 @@ export default function HomePage() {
             <button className="btn btn-primary">
               <svg className="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} 
-                  d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"
+                  d="M12 6v6m0 0v6m0-6h6m-6 0H6"
                 />
               </svg>
-              Upload Syllabus
+              Request University
             </button>
           </div>
         </div>
@@ -149,9 +149,6 @@ export default function HomePage() {
                       <h3 className="text-lg font-semibold text-gray-900">
                         {university.name}
                       </h3>
-                      <p className="text-sm text-gray-500">
-                        {university.syllabusCount} syllabi available
-                      </p>
                     </div>
                   </div>
                   <Link
