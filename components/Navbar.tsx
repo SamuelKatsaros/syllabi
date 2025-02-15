@@ -77,9 +77,8 @@ export default function Navbar({ universityId }: NavbarProps) {
 
       <div className="navbar-center">
         <div className="btn btn-ghost text-xl flex items-center">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={theme.logo} alt={`${theme.name} Logo`} className="h-8 w-8 mr-2" />
-          <span className="truncate max-w-[150px] md:max-w-none">{theme.name}</span>
+          <img src={theme.logo} alt={`${theme.name} Logo`} className="h-8 w-8" />
+          <span className="truncate max-w-[150px] ml-2 hidden md:inline">{theme.name}</span>
         </div>
       </div>
 
