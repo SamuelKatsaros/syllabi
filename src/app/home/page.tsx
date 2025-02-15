@@ -25,9 +25,9 @@ export default function HomePage() {
       id,
       name: data.name,
       primaryColor: data.primaryColor,
-      logo: data.logo,
+      logo: data.logo || `/logos/${id.toLowerCase()}.png`,
       syllabusCount: Math.floor(Math.random() * 100) + 20,
-      subdomain: data.subdomain,
+      subdomain: data.subdomain || id.toLowerCase(),
     }))
     .filter(uni => uni.id !== 'default' && uni.id !== 'home')
     .filter(uni => 
@@ -142,7 +142,7 @@ export default function HomePage() {
                       width={48}
                       height={48}
                       className="h-12 w-12 object-contain rounded-full bg-gray-50 p-1"
-                      unoptimized
+                      priority
                     />
                     <div className="ml-4">
                       <h3 className="text-lg font-semibold text-gray-900">
