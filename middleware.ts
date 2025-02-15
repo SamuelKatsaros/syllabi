@@ -14,6 +14,19 @@ export function middleware(req: NextRequest) {
     }
   }
 
+  // Handle static files and images first
+  if (
+    url.pathname.startsWith('/_next/') ||
+    url.pathname.startsWith('/images/') ||
+    url.pathname.startsWith('/logos/') ||
+    url.pathname.startsWith('/favicons/') ||
+    url.pathname.includes('.png') ||
+    url.pathname.includes('.jpg') ||
+    url.pathname.includes('.ico')
+  ) {
+    return NextResponse.next();
+  }
+
   // Allow /home access on all subdomains
   if (url.pathname === '/home') {
     return NextResponse.next();
@@ -30,11 +43,6 @@ export function middleware(req: NextRequest) {
     if (!url.pathname.startsWith('/home')) {
       return NextResponse.rewrite(new URL('/home', req.url));
     }
-    return NextResponse.next();
-  }
-
-  // Let Next.js handle static files directly
-  if (url.pathname.startsWith('/favicons/') || url.pathname.startsWith('/logos/') || url.pathname.startsWith('/_next/')) {
     return NextResponse.next();
   }
 
@@ -58,6 +66,6 @@ export function middleware(req: NextRequest) {
 
 export const config = {
   matcher: [
-    '/((?!api|_next/static|_next/image|favicon.ico).*)',
+    '/((?!_next/static|_next/image).*)',
   ],
 };
