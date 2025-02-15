@@ -37,12 +37,25 @@ const nextConfig = {
     };
   },
   images: {
-    domains: ['home.syllabus.website'],
+    domains: [
+      'localhost',
+      'syllabus.website',
+      'home.syllabus.website',
+      'vercel.app'
+    ],
     remotePatterns: [
+      {
+        protocol: 'http',
+        hostname: 'localhost',
+      },
       {
         protocol: 'https',
         hostname: '*.syllabus.website',
       },
+      {
+        protocol: 'https',
+        hostname: 'syllabus.website',
+      }
     ],
   },
   async headers() {
