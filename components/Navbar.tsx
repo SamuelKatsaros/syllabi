@@ -69,6 +69,9 @@ export default function Navbar({ universityId }: NavbarProps) {
               <Link href="/">Homepage</Link>
             </li>
             <li>
+              <Link href="/home">University Directory</Link>
+            </li>
+            <li>
               <Link href="/about">About</Link>
             </li>
           </ul>
@@ -78,7 +81,7 @@ export default function Navbar({ universityId }: NavbarProps) {
       <div className="navbar-center">
         <div className="btn btn-ghost text-xl flex items-center">
           <img src={theme.logo} alt={`${theme.name} Logo`} className="h-8 w-8" />
-          <span className="truncate max-w-[150px] ml-2 hidden md:inline">{theme.name}</span>
+          <span className="ml-2 hidden md:inline">{theme.name}</span>
         </div>
       </div>
 
