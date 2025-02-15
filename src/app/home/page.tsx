@@ -55,6 +55,7 @@ export default function HomePage() {
               width={40}
               height={40}
               className="h-8 w-8"
+              unoptimized
             />
             <div className="relative">
               <svg 
@@ -141,6 +142,7 @@ export default function HomePage() {
                       width={48}
                       height={48}
                       className="h-12 w-12 object-contain rounded-full bg-gray-50 p-1"
+                      unoptimized
                     />
                     <div className="ml-4">
                       <h3 className="text-lg font-semibold text-gray-900">
