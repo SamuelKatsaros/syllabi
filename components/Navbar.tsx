@@ -6,6 +6,7 @@ import { useRouter, useSearchParams, usePathname } from "next/navigation";
 import { useState, useEffect } from "react";
 import themes from "../themes.json"; // Import themes
 import UploadModal from "./UploadModal";
+import Image from 'next/image';
 
 interface NavbarProps {
   universityId: string;
@@ -80,7 +81,13 @@ export default function Navbar({ universityId }: NavbarProps) {
 
       <div className="navbar-center">
         <div className="btn btn-ghost text-xl flex items-center">
-          <img src={theme.logo} alt={`${theme.name} Logo`} className="h-8 w-8" />
+          <Image 
+            src={theme.logo} 
+            alt={`${theme.name} Logo`} 
+            width={32}
+            height={32}
+            className="h-8 w-8"
+          />
           <span className="ml-2 hidden md:inline">{theme.name}</span>
         </div>
       </div>
