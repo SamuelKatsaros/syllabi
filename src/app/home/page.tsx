@@ -19,21 +19,45 @@ export default function HomePage() {
   const [searchQuery, setSearchQuery] = useState('');
   const [isScrolled, setIsScrolled] = useState(false);
 
-  const universities: University[] = Object.keys(themes)
-    .filter(id => id !== 'default' && id !== 'home')
-    .map(id => {
-      const theme = themes[id as keyof typeof themes];
-      return {
-        id,
-        name: theme.name,
-        primaryColor: theme.primaryColor,
-        logo: theme.logo,
-        subdomain: theme.subdomain,
-      } as University;
-    })
-    .filter(uni => 
-      uni.name.toLowerCase().includes(searchQuery.toLowerCase())
-    );
+  const universities: University[] = [
+    {
+      id: "3884b0da-b578-4e74-b921-e2d52dee1f71",
+      name: "Stony Brook University",
+      primaryColor: "#990000",
+      logo: "/logos/sbu.png",
+      subdomain: "sbu"
+    },
+    {
+      id: "123e4567-e89b-12d3-a456-426614174000",
+      name: "New York University",
+      primaryColor: "#57068C",
+      logo: "/logos/nyu.png",
+      subdomain: "nyu"
+    },
+    {
+      id: "ebd6ad52-dedd-4381-be9f-f16fa0686fe0",
+      name: "Harvard College",
+      primaryColor: "#A51C30",
+      logo: "/logos/harvard.png",
+      subdomain: "harvard"
+    },
+    {
+      id: "83705fa6-af38-4e4d-9a72-6115befd90a1",
+      name: "SUNY New Paltz",
+      primaryColor: "#003e7d",
+      logo: "/logos/newpaltz.png",
+      subdomain: "newpaltz"
+    },
+    {
+      id: "937be84f-c8df-40ea-9fc2-e4493d627206",
+      name: "Suffolk County Community College",
+      primaryColor: "#001489",
+      logo: "/logos/sccc.png",
+      subdomain: "sccc"
+    }
+  ].filter(uni => 
+    uni.name.toLowerCase().includes(searchQuery.toLowerCase())
+  );
 
   useEffect(() => {
     const handleScroll = () => {
@@ -51,7 +75,7 @@ export default function HomePage() {
         <div className="container mx-auto px-4 py-3 flex items-center justify-between">
           <div className="flex items-center gap-8">
             <Image 
-              src="/logos/default.png"
+              src={"/logos/default.png"}
               alt="Syllabus Website Logo"
               width={40}
               height={40}
