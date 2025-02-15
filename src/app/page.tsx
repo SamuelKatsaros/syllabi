@@ -8,6 +8,7 @@ import SearchAndFilters from '../../components/SearchAndFilters'; // ✅ Ensure 
 import NotificationBar from '../../components/NotificationBar';
 import themes from '../../themes.json'; // ✅ Ensure this is actually used
 import { subdomainToUniversityId } from '@/utils/universityMappings';
+import { pageview } from '@/utils/analytics';
 
 interface Course {
   name: string;
@@ -75,6 +76,14 @@ function HomeContent() {
         setSyllabi([]); // Default to empty array if fetch fails
       });
   }, [universityId, department, courseCode, professor, semester, sort, q]);
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const host = window.location.host;
+      const subdomain = host.split('.')[0];
+      pageview(window.location.pathname + window.location.search, subdomain);
+    }
+  }, []);
 
   const safeSyllabi = syllabi || [];
 
