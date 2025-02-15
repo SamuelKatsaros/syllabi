@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useState, useEffect } from 'react';
-import themes from '../../../themes.json';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
