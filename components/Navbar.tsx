@@ -67,10 +67,10 @@ export default function Navbar({ universityId }: NavbarProps) {
             tabIndex={0}
             className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow text-black">
             <li>
-              <a href={`https://${universityId}.syllabus.website/home`}>Homepage</a>
+              <a href="https://home.syllabus.website">Homepage</a>
             </li>
             <li>
-              <a href={`https://home.syllabus.website`}>University Directory</a>
+              <a href="https://home.syllabus.website">University Directory</a>
             </li>
             <li>
               <Link href="/about">About</Link>
